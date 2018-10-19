@@ -24,6 +24,8 @@ node {
 
     stage "Deploy"
 
-       sh "sed 's#'$OLD'#'$BUILDIMG'#' applications/hello-kenzan/k8s/deployment.yaml | kubectl apply -f -" 
+       sh "sed 's#'$OLD'#'$BUILDIMG'#' applications/hello-kenzan/k8s/deployment.yaml" 
+       sh "kubectl delete -f  applications/hello-kenzan/k8s/deployment.yaml"
+       sh "kubectl create -f  applications/hello-kenzan/k8s/deployment.yaml"
 
 }
