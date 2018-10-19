@@ -10,7 +10,9 @@ node {
     appName = "hello-kenzan"
     registryHost = "127.0.0.1:30400/"
     imageName = "${registryHost}${appName}:${tag}"
+    latest = ":latest"
     env.BUILDIMG=imageName
+    env.OLD="${registryHost}${appName}${latest}"
 
     stage "Build"
     
@@ -22,6 +24,6 @@ node {
 
     stage "Deploy"
 
-        kubernetesDeploy configs: "applications/${appName}/k8s/*.yaml", kubeconfigId: 'kenzan_kubeconfig'
+       sh "sed 's#'$OLD'#'$BUILDIMG'#' applications/hello-kenzan/k8s/deployment.yaml | kubectl apply -f -" 
 
 }
