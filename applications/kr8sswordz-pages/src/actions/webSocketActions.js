@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import constants from '../constants';
 import * as types from './actionTypes';
 
-const baseUrl = `http://monitor-scale.${constants.minikubeIp}.xip.io`;
+const baseUrl = `http://${constants.minikubeIp}:31426`;
 const socket = io(baseUrl);
 
 export function getPods () {
