@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.136
+FROM jenkins/jenkins:lts
 USER root
 
 #Pre-Install Jenkins Plugins
@@ -21,3 +21,6 @@ apt-get update && apt-get install -y kubectl
 RUN addgroup --gid 1001 dsock
 RUN gpasswd -a jenkins dsock 
 #USER jenkins
+
+# Install MAVEN
+RUN apt-get update && apt-get install -y maven

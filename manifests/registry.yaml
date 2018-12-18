@@ -1,12 +1,12 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: registry
+  name: registrypv
   labels:
     type: local
 spec:
   capacity:
-    storage: 4Gi
+    storage: 10Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -16,13 +16,13 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: registry-claim
+  name: registrypvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 4Gi
+      storage: 10Gi
 ---
 
 apiVersion: v1
@@ -35,7 +35,7 @@ spec:
   ports:
     - port: 5000
       targetPort: 5000
-      nodePort: 30400
+      nodePort: 30800
       name: registry
   selector:
     app: registry
@@ -67,8 +67,8 @@ metadata:
   labels:
     app: registry
 spec:
-  strategy:
-    type: Recreate
+#  strategy:
+#    type: Recreate
   template:
     metadata:
       labels:
@@ -101,4 +101,4 @@ spec:
           path: /var/run/docker.sock
       - name: registry-persistent-storage
         persistentVolumeClaim:
-          claimName: registry-claim
+          claimName: registrypvc
